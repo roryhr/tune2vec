@@ -1,15 +1,28 @@
 import json
 import requests
-#import urllib.request
+from pathlib import Path
 
 with open('api_key.json') as f:
     API_KEY = json.load(f)['API_KEY']
 
-r = requests.get('https://freemusicarchive.org/featured.json', 
+# Get 300 featured tracks
+r = requests.get('https://freemusicarchive.org/featured.json',
                  data={'api_key': API_KEY})
+tracks = r.json()['aTracks']
 
-# f = urllib.request.urlopen('http://freemusicarchive.org/featured.json')
-# print(f.read(100).decode('utf-8'))
-x = r.json()
+for track in tracks[:90]:
+    file_path = Path(track['track_file'])
+    if file_path.exists():
+        continue
 
-print(r.url)
+    print(file_path)
+    try:
+        file_path.parent.mkdir(parents=True)
+    except FileExistsError:
+        pass
+
+    r2 = requests.get(track['track_file_url'],
+                      params={'api_key': API_KEY})
+
+    with open(str(file_path), mode='wb') as f:
+        f.write(r2.content)

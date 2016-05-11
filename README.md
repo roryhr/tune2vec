@@ -14,3 +14,9 @@ audio in -> CNN + RNN (encoder) -> RNN + CNN (decoder)-> audio out
 
 error ~ audio in - audio out
 
+## Music Source
+
+The [Free Music Archive](freemusicarchive.org) makes available public domain songs through their API.
+I've scraped about 1 GB of songs.
+
+
