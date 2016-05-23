@@ -21,9 +21,9 @@ def ffmpeg_load_audio(filename, sr=44100, mono=False, normalize=False,
         'ffmpeg',
         '-i', filename,
         '-f', format_string,
-#        '-acodec', 'pcm_' + format_string,
-#        '-ar', str(sr),
-#        '-ac', str(channels),
+        '-acodec', 'pcm_' + format_string,
+        '-ar', str(sr),
+        '-ac', str(channels),
         '-']
     p = sp.Popen(command, stdout=sp.PIPE, stderr=DEVNULL, bufsize=4096)
     bytes_per_sample = np.dtype(in_type).itemsize
@@ -54,4 +54,4 @@ def ffmpeg_load_audio(filename, sr=44100, mono=False, normalize=False,
     return audio, sr
     
 if __name__ == '__main__':
-    audio, sr = ffmpeg_load_audio('test_file.mp3')
+    audio, sample_rate = ffmpeg_load_audio('test_file.mp3')
